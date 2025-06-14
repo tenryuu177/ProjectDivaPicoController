@@ -69,6 +69,5 @@ After disconnecting and reconnecting your Raspberry the board should light up af
 
 
 
-
-#Disclaimer
+# Disclaimer
 The code was entirely written by Google Gemini
