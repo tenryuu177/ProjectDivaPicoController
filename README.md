@@ -1,7 +1,7 @@
 # Project Diva Controller
 
 ## Main features:
-- Cheap
+- Cheap (about 10€)
 - Simple
 - Compact (fits 250x250 Printbeds)
 - 4 Main buttons
@@ -10,10 +10,11 @@
 
 
 ## What you need:
-- 1: Raspbery Pi Pico
-- 8: Kailh Choc switches
-- 10: WS2812B 5050SMD LEDs
+- 1x Raspbery Pi Pico (With USB-C)
+- 8x Kailh Choc switches
+- 10x WS2812B 5050SMD LEDs
 - 3D Printer
+- Clear Filament and any other color you might want
 - Soldering Iron
 - Wires
 - Protoboard/Perfboard for easier wiring (Optional but highly reccomended)
@@ -63,3 +64,11 @@ Then drop the content of the Raspberry folder onto your Raspberry.
 The 'lib' folder and 'code.py' should be in root.
 
 After disconnecting and reconnecting your Raspberry the board should light up after a few seconds
+
+
+
+
+
+
+#Disclaimer
+The code was entirely written by Google Gemini
