@@ -43,15 +43,21 @@ SlideLeft/Q: GP4
 
 SlideRight/E: GP5
 
-However can wire these any way you want, you can alter the assigned GPIO Pins starting from line 23 in the code.
+However can wire these any way you want and then alter the assigned GPIO Pins starting from line 23 in the code.
 
 ### LEDs
 The first 4 LEDs are Triangle, Square, Cross and Circle in that order and light up along with button presses,
 
-the last 6 LEDs can be placed in any order beneath the slidebar.
+the last 6 LEDs can be placed in any order underneath the slidebar. They light up when either side is pressed
 
 The DataIn of the first LED has to be connected with GP0 after that they are wired in series.
-Here's a wiring Diagram.
 ![LED-Pinout](WS2812B-Addressable-RGB-LED-pinout-diagram.jpg)
 ![LED-Order](LEDOrder.png)
 
+# Raspberry setup
+First flash your Rasberry with the latest Circuit Python version available: https://circuitpython.org/board/raspberry_pi_pico/
+
+Then drop the content of the Raspberry folder onto your Raspberry.
+The 'lib' folder and 'code.py' should be in root.
+
+After disconnecting and reconnecting your Raspberry the board should light up after a few seconds
