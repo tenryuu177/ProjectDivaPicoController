@@ -55,9 +55,11 @@ The DataIn of the first LED has to be connected with GP0 after that they are wir
 ![LED-Order](LEDOrder.png)
 
 # Raspberry setup
+
 First flash your Rasberry with the latest Circuit Python version available: https://circuitpython.org/board/raspberry_pi_pico/
 
 Then drop the content of the Raspberry folder onto your Raspberry.
+
 The 'lib' folder and 'code.py' should be in root.
 
 After disconnecting and reconnecting your Raspberry the board should light up after a few seconds
