@@ -2,7 +2,6 @@
 
 ## Main features:
 - Cheap (about 10€)
-- Simple
 - Compact (fits 250x250 Print beds)
 - 4 Main buttons
 - Fake Slide pad using buttons
