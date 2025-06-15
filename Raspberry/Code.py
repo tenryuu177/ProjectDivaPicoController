@@ -3,7 +3,7 @@ import digitalio
 import usb_hid
 import time
 import neopixel
-import math
+import math # Used for sine wave calculation for pulsing LEDs
 from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keycode import Keycode
 
@@ -31,7 +31,7 @@ BUTTON_CONFIG = {
 # These are the static colors when the LEDs are not actively pulsing or overridden.
 COLOR_GREEN = (30, 255, 30)
 COLOR_PINK = (255, 40, 255)
-COLOR_BLUE = (30, 30, 255)
+COLOR_BLUE = (60, 60, 255)
 COLOR_RED = (255, 40, 40)
 COLOR_YELLOW = (255, 255, 0)
 COLOR_OFF = (0, 0, 0) # Represents an LED being off
@@ -39,6 +39,12 @@ COLOR_OFF = (0, 0, 0) # Represents an LED being off
 # Pulsing Animation Configuration:
 PULSE_DURATION = 0.5  # Time in seconds for one full pulse cycle (e.g., from dimmest to brightest and back)
 PULSE_MAGNITUDE_FACTOR = 0.7 # How much the brightness varies during the pulse (0.0 = no change, 1.0 = dims significantly)
+
+# Rainbow Flow Configuration:
+# This value determines how quickly the color changes between adjacent LEDs in the rainbow.
+# A larger value makes the colors more "cohesive" and appear to flow gradually,
+# while a smaller value makes the color steps more distinct.
+RAINBOW_INCREMENT_PER_LED = 40 # Adjusted for more distinct flow (e.g., 10-40)
 
 # --- Initialization Section ---
 
@@ -89,38 +95,17 @@ def wheel(pos):
 
 def apply_pulse(base_color, keycode, pulse_duration, pulse_magnitude_factor):
     """
-    Applies a smooth pulsing effect to a given base color.
+    Adds a smooth pulsing effect to a given base color.
     The LED's brightness will smoothly cycle from `(1.0 - pulse_magnitude_factor)`
     of its original brightness up to `1.0` of its original brightness.
-    
-    Args:
-        base_color (tuple): The original RGB color (e.g., (0, 255, 0)).
-        keycode (Keycode): The keycode associated with the button that triggers this pulse.
-                           Used to retrieve the pulse start time.
-        pulse_duration (float): The time in seconds for one complete pulse cycle.
-        pulse_magnitude_factor (float): How much the brightness varies (0.0 to 1.0).
-                                        0.0 means no pulse (constant brightness), 1.0 means it dims significantly.
-                                        
-    Returns:
-        tuple: The adjusted RGB color with the pulsing effect applied.
     """
     start_time = pulse_start_times[keycode]
     if start_time == 0.0:
-        # If start_time is 0.0, it means the button is not pressed, so no pulse.
         return base_color
 
     elapsed_time = time.monotonic() - start_time
-    
-    # Calculate a sine wave value that smoothly oscillates between 0.0 and 1.0.
-    # `elapsed_time * 2 * math.pi / pulse_duration` ensures one full cycle over `pulse_duration`.
-    # `(math.sin(...) + 1) / 2` transforms the sine wave from [-1, 1] to [0, 1].
     pulse_val = (math.sin(elapsed_time * 2 * math.pi / pulse_duration) + 1) / 2
-
-    # Calculate the current brightness multiplier.
-    # This multiplier ranges from (1.0 - pulse_magnitude_factor) (dimmest) to 1.0 (brightest).
     current_brightness_factor = (1.0 - pulse_magnitude_factor) + (pulse_val * pulse_magnitude_factor)
-    
-    # Apply the calculated brightness multiplier to each color component (R, G, B).
     adjusted_color = tuple(int(c * current_brightness_factor) for c in base_color)
     return adjusted_color
 
@@ -139,8 +124,8 @@ while True:
         # Check if the button is currently pressed (pin reads LOW)
         # and if its state has changed from not pressed to pressed.
         if not button_obj.value and not button_data["is_pressed"]:
-            buttons[pin]["is_pressed"] = True
-            keyboard.press(keycode)
+            buttons[pin]["is_pressed"] = True  # Update internal state
+            keyboard.press(keycode)            # Send 'press' HID event to the computer
             
             # If this button is one of the ones that triggers an LED pulse,
             # record the current time as the start of its pulse.
@@ -150,8 +135,8 @@ while True:
         # Check if the button is currently released (pin reads HIGH)
         # and if its state has changed from pressed to released.
         elif button_obj.value and button_data["is_pressed"]:
-            buttons[pin]["is_pressed"] = False
-            keyboard.release(keycode)
+            buttons[pin]["is_pressed"] = False # Update internal state
+            keyboard.release(keycode)          # Send 'release' HID event to the computer
             
             # If this button was pulsing, reset its pulse timer.
             # Setting it to 0.0 tells `apply_pulse` to stop pulsing.
@@ -161,45 +146,59 @@ while True:
     # --- 2. Update LED States ---
 
     # LED 1 (Index 0): Constant Green, Pulse when W is pressed.
-    if buttons[board.GP16]["is_pressed"]:
+    if buttons[board.GP16]["is_pressed"]: # Check if W key is currently held down
         pixels[0] = apply_pulse(COLOR_GREEN, Keycode.W, PULSE_DURATION, PULSE_MAGNITUDE_FACTOR)
     else:
-        pixels[0] = COLOR_GREEN
+        pixels[0] = COLOR_GREEN # Static green when W is not pressed
 
     # LED 2 (Index 1): Constant Pink, Pulse when A is pressed.
-    if buttons[board.GP17]["is_pressed"]:
+    if buttons[board.GP17]["is_pressed"]: # Check if A key is currently held down
         pixels[1] = apply_pulse(COLOR_PINK, Keycode.A, PULSE_DURATION, PULSE_MAGNITUDE_FACTOR)
     else:
         pixels[1] = COLOR_PINK
 
     # LED 3 (Index 2): Constant Blue, Pulse when S is pressed.
-    if buttons[board.GP18]["is_pressed"]:
+    if buttons[board.GP18]["is_pressed"]: # Check if S key is currently held down
         pixels[2] = apply_pulse(COLOR_BLUE, Keycode.S, PULSE_DURATION, PULSE_MAGNITUDE_FACTOR)
     else:
         pixels[2] = COLOR_BLUE
 
     # LED 4 (Index 3): Constant Red, Pulse when D is pressed.
-    if buttons[board.GP19]["is_pressed"]:
+    if buttons[board.GP19]["is_pressed"]: # Check if D key is currently held down
         pixels[3] = apply_pulse(COLOR_RED, Keycode.D, PULSE_DURATION, PULSE_MAGNITUDE_FACTOR)
     else:
         pixels[3] = COLOR_RED
 
-    # LEDs 5-10 (Indices 4-9): Rainbow Spectrum, Glow Yellow when Q or E is pressed.
-    is_qe_pressed = buttons[board.GP4]["is_pressed"] or buttons[board.GP5]["is_pressed"]
+    # Get states for Q and E buttons
+    is_q_pressed = buttons[board.GP4]["is_pressed"]
+    is_e_pressed = buttons[board.GP5]["is_pressed"]
 
-    for i in range(4, NUM_PIXELS): # Loop through LEDs from index 4 up to NUM_PIXELS-1
-        if is_qe_pressed:
-            pixels[i] = COLOR_YELLOW # Override to static yellow if Q or E is pressed
+    # LEDs 5-10 (Indices 4-9): Specific Yellow or Rainbow with directional flow
+    for i in range(4, NUM_PIXELS): # Loop through LEDs from index 4 up to NUM_PIXELS-1 (LEDs 5 through 10)
+        if i in [4, 5, 6] and is_e_pressed: # Check for LEDs 5, 6, 7 (indices 4, 5, 6) when E is pressed
+            pixels[i] = COLOR_YELLOW
+        elif i in [7, 8, 9] and is_q_pressed: # Check for LEDs 8, 9, 10 (indices 7, 8, 9) when Q is pressed
+            pixels[i] = COLOR_YELLOW
         else:
-            # Apply the rainbow cycling effect.
-            # `i * (256 // NUM_PIXELS)` spreads the colors nicely across the LEDs.
-            # `rainbow_offset` shifts the entire rainbow for animation.
-            pixel_color_pos = (i * (256 // NUM_PIXELS) + rainbow_offset) % 256
-            pixels[i] = wheel(pixel_color_pos)
+            # Apply the rainbow cycling effect with directional flow
+            if i in [4, 5, 6]:
+                # LEDs 4, 5, 6: Flow from left to right (starting at LED 6 and ending at LED 4).
+                # This means the color for LED 6 should be 'start', LED 5 'middle', LED 4 'end'.
+                # To achieve this with `rainbow_offset` moving linearly, we invert the index.
+                group_relative_index = 6 - i # 0 for i=6, 1 for i=5, 2 for i=4
+                pixel_color_pos = (group_relative_index * RAINBOW_INCREMENT_PER_LED + rainbow_offset) % 256
+                pixels[i] = wheel(pixel_color_pos)
+            elif i in [7, 8, 9]:
+                # LEDs 7, 8, 9: Flow from right to left (starting at LED 7 and ending at LED 9).
+                # This means the color for LED 7 should be 'start', LED 8 'middle', LED 9 'end'.
+                group_relative_index = i - 7 # 0 for i=7, 1 for i=8, 2 for i=9
+                pixel_color_pos = (group_relative_index * RAINBOW_INCREMENT_PER_LED + rainbow_offset) % 256
+                pixels[i] = wheel(pixel_color_pos)
 
     # Advance the rainbow animation for the next loop iteration.
-    rainbow_offset = (rainbow_offset + 1) % 256 # Cycle offset from 0 to 255
+    rainbow_offset = (rainbow_offset + 2) % 256 # Increased increment for faster flow
 
     pixels.show() # Send the updated color data to the NeoPixels. This makes the changes visible.
 
     time.sleep(0.01) # Small delay to prevent busy-waiting and allow other processes to run smoothly.
+
