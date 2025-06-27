@@ -7,6 +7,7 @@
 - Fake Slide pad using buttons
 - Enter/Escape Keys
 
+[Con01](/Pictures/Con01.jpg)
 
 ## What you need:
 - 1x Raspberry Pi Pico (with USB-C)
@@ -48,7 +49,7 @@ However, you can wire these any way you want and then alter the assigned GPIO Pi
 ### LEDs
 The first 4 LEDs are Triangle, Square, Cross, and Circle in that order and light up along with button presses.
 
-The last 6 LEDs can be placed in any order underneath the slide pad. They light up when either side is pressed.
+The last 6 LEDs should also be wired in series as in the picture, they have a RGB cycle and either side lights up respectively when pressed.
 
 The Data In of the first LED has to be connected with GP0 after that, they are wired in series.
 ![LED-Pinout](/Pictures/WS2812B-Addressable-RGB-LED-pinout-diagram.jpg)
