@@ -25,9 +25,13 @@ The buttons don't require any post-processing when printed with 0.1mm layers the
 Print the buttons with low infill so that they stay lightweight and more transparent. I choose to give them all different infill patterns similar to their symbol.
 
 I used the following settings:
+
 Triangle with 15% triangle infill, rotate 45° so that the pattern aligns.
+
 Square with 10% grid infill pattern, rotate the part 45° so that the pattern aligns.
+
 Circle with 10% concentric infill pattern.
+
 Cross with 10% Cross pattern
 
 
