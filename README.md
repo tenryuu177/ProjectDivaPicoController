@@ -7,7 +7,7 @@
 - Fake Slide pad using buttons
 - Enter/Escape Keys
 
-[Con01](/Pictures/Con01.jpg)
+![Con01](/Pictures/Con01.jpg)
 
 ## What you need:
 - 1x Raspberry Pi Pico (with USB-C)
