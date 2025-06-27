@@ -52,7 +52,7 @@ The last 6 LEDs can be placed in any order underneath the slide pad. They light 
 
 The Data In of the first LED has to be connected with GP0 after that, they are wired in series.
 ![LED-Pinout](/Pictures/WS2812B-Addressable-RGB-LED-pinout-diagram.jpg)
-![LED-Order](/Pictures/LEDOrder.png)
+![LED-Order](/Pictures/LED-Order.png)
 
 # Raspberry setup
 
