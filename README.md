@@ -51,8 +51,8 @@ The first 4 LEDs are Triangle, Square, Cross, and Circle in that order and light
 The last 6 LEDs can be placed in any order underneath the slide pad. They light up when either side is pressed.
 
 The Data In of the first LED has to be connected with GP0 after that, they are wired in series.
-![LED-Pinout](WS2812B-Addressable-RGB-LED-pinout-diagram.jpg)
-![LED-Order](LEDOrder.png)
+![LED-Pinout](Pictures\WS2812B-Addressable-RGB-LED-pinout-diagram.jpg)
+![LED-Order](Pictures\LEDOrder.png)
 
 # Raspberry setup
 
