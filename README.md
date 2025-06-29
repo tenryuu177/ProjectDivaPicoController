@@ -42,7 +42,7 @@ Cross with 10% Cross pattern
 
 'ChocBodyShort' needs to be printed 2 times and they are placed underneath the slidebar.
 
-
+The ChocBody parts should have a pretty tight fit so that they can be pressed in place but still removed later if needed. Might need some sanding to get them in or you could just glue them in.
 
 
 ## Wiring
