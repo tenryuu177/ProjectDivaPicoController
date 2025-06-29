@@ -13,6 +13,7 @@
 - 1x Raspberry Pi Pico (with USB-C)
 - 8x Kailh Choc switches
 - 10x WS2812B 5050SMD LEDs
+- super glue
 - 3D Printer
 - Clear Filament and any other color you might want
 - Soldering Iron
@@ -21,7 +22,7 @@
 
 # How to build:
 Choose between the press fit and the M3 threaded version and print all parts.
-The buttons don't require any post-processing when printed with 0.1mm layers they are smooth enough as is.
+The buttons don't require any (or only minimal) post-processing when printed with 0.1mm layers they are smooth enough as is.
 Print the buttons with low infill so that they stay lightweight and more transparent. I choose to give them all different infill patterns similar to their symbol.
 
 I used the following settings:
@@ -33,6 +34,15 @@ Square with 10% grid infill pattern, rotate the part 45° so that the pattern al
 Circle with 10% concentric infill pattern.
 
 Cross with 10% Cross pattern
+
+
+'ChocStem' needs to be printed 4 times and they are going to be glued to the main buttons.
+
+'ChocBody' needs to be printed 6 times and they are used for all the buttons.
+
+'ChocBodyShort' needs to be printed 2 times and they are placed underneath the slidebar.
+
+
 
 
 ## Wiring
