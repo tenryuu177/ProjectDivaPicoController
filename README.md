@@ -10,9 +10,10 @@
 ![Con01](/Pictures/Con01.jpg)
 
 ## What you need:
+The links lead to AliExpress
 - 1x [Raspberry Pi Pico (with USB-C)](https://www.aliexpress.com/item/1005008574488243.html?spm=a2g0o.order_list.order_list_main.5.2c061802aOrQjI)
-- 8x Kailh Choc switches
-- 10x WS2812B 5050SMD LEDs
+- 8x [Kailh Choc switches](https://www.aliexpress.com/item/1005006626760418.html?spm=a2g0o.order_list.order_list_main.30.2c061802aOrQjI)
+- 10x [WS2812B 5050SMD LEDs](https://www.aliexpress.com/item/4000750610574.html?spm=a2g0o.order_list.order_list_main.45.2c061802aOrQjI)
 - super glue
 - 3D Printer
 - Clear Filament and any other color you might want
