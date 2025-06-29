@@ -10,7 +10,7 @@
 ![Con01](/Pictures/Con01.jpg)
 
 ## What you need:
-- 1x Raspberry Pi Pico (with USB-C)
+- 1x [Raspberry Pi Pico (with USB-C)](https://www.aliexpress.com/item/1005008574488243.html?spm=a2g0o.order_list.order_list_main.5.2c061802aOrQjI)
 - 8x Kailh Choc switches
 - 10x WS2812B 5050SMD LEDs
 - super glue
