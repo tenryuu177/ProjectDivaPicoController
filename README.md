@@ -24,7 +24,7 @@ The links lead to AliExpress
 # How to build:
 Choose between the press fit and the M3 threaded version and print all parts.
 The buttons don't require any (or only minimal) post-processing when printed with 0.1mm layers they are smooth enough as is.
-Print the buttons with low infill so that they stay lightweight and more transparent. I choose to give them all different infill patterns similar to their symbol.
+Print the buttons with low infill so that they stay lightweight and more transparent. I chose to give them all different infill patterns similar to their symbol.
 
 I used the following settings:
 
@@ -48,7 +48,7 @@ The ChocBody parts should have a pretty tight fit so that they can be pressed in
 
 ## Wiring
 ### Buttons
-I choose the following GPIO Pins
+I chose the following GPIO Pins
 
 Triangle/W GP16
 
